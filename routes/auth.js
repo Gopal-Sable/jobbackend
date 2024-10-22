@@ -29,6 +29,8 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ msg: 'Registered successfully. Please verify your email.' });
   } catch (err) {
     logger.error('Registration error:', err);
+    console.log('Registration error:', err);
+    
     res.status(500).json({ msg: 'Server error' });
   }
 });
@@ -52,6 +54,8 @@ router.post('/verify-otp', async (req, res) => {
     res.status(200).json({ msg: 'Email verified successfully' });
   } catch (err) {
     logger.error('OTP verification error:', err);
+    console.log('OTP verification error:', err);
+    
     res.status(500).json({ msg: 'Server error' });
   }
 });
@@ -84,6 +88,8 @@ router.post('/login', async (req, res) => {
     res.status(200).json({ token });
   } catch (err) {
     logger.error('Login error:', err);
+    console.log('Login error:', err);
+    
     res.status(500).json({ msg: 'Server error' });
   }
 });

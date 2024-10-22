@@ -11,6 +11,8 @@ module.exports = (req, res, next) => {
     next();
   } catch (err) {
     logger.error('JWT authentication error:', err);
+    console.log('JWT authentication error:', err);
+    
     res.status(401).json({ msg: 'Token is not valid' });
   }
 };

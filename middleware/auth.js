@@ -14,6 +14,8 @@ const auth = (req, res, next) => {
     next();
   } catch (err) {
     logger.error('JWT verification failed', err);
+    console.log('JWT verification failed', err);
+    
     res.status(401).json({ msg: 'Token is not valid' });
   }
 };

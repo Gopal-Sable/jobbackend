@@ -97,6 +97,8 @@ router.post('/job', auth, async (req, res) => {
     res.status(201).json({ msg: 'Job posted and emails sent' });
   } catch (err) {
     logger.error('Job posting error:', err);
+    console.log('Job posting error:', err);
+    
     res.status(500).json({ msg: 'Server error' });
   }
 });
