@@ -99,7 +99,7 @@ router.post('/job', auth, async (req, res) => {
     logger.error('Job posting error:', err);
     console.log('Job posting error:', err);
     
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: 'Server error',err  });
   }
 });
 
