@@ -1,22 +1,26 @@
 // JWT Authentication middleware 
 const jwt = require('jsonwebtoken');
-const logger = require('../utils/logger');
+const Companies = require('../models/Company'); // Ensure this is the correct path
 
-const auth = (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '');
-  if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
-  }
-
+const auth = async (req, res, next) => {
   try {
+    const token = req.header('Authorization');
+
+    // Decode the JWT to get the company ID
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.company = decoded;
+    
+    // Fetch the company from the database including companyName
+    const company = await Companies.findById(decoded.id).select('companyName');
+
+    if (!company) {
+      return res.status(404).json({ msg: 'Company not found' });
+    }
+
+    // Attach the company object to the request
+    req.company = company;
     next();
   } catch (err) {
-    logger.error('JWT verification failed', err);
-    console.log('JWT verification failed', err);
-    
-    res.status(401).json({ msg: 'Token is not valid' });
+    res.status(401).json({ msg: 'Unauthorized' });
   }
 };
 
